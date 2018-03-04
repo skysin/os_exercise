@@ -28,7 +28,5 @@
   ```
   常用功能的代码片段优化；
   ```
-    #define ROUNDDOWN(a, n) ({                                       size_t __a = (size_t)(a);
-    (typeof(a))(__a - __a % (n));
-    })
+    #define ROUNDDOWN(a, n) ({size_t __a = (size_t)(a);(typeof(a))(__a -__a % (n));})
   ```
