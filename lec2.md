@@ -21,7 +21,21 @@
     movl %ebp, 28(%eax)
     ```
     保存寄存器中的数据
+
 * 利用宏进行复杂数据结构中的数据访问；
+  ```
+    #define SETGATE(gate, istrap, sel, off, dpl) {
+        (gate).gd_off_15_0 = (uint32_t)(off) & 0xffff;
+        (gate).gd_ss = (sel);
+        (gate).gd_args = 0;
+        (gate).gd_rsv1 = 0;
+        (gate).gd_type = (istrap) ? STS_TG32 : STS_IG32;
+        (gate).gd_s = 0;
+        (gate).gd_dpl = (dpl);
+        (gate).gd_p = 1;
+        (gate).gd_off_31_16 = (uint32_t)(off) >> 16;
+    }
+  ```
   利用宏进行数据类型转换；
   ```
     #define to_struct(ptr, type, member) ((type *)((char *)(ptr) - offsetof(type, member)))
